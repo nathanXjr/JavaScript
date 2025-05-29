@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login Page</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+      }
+      form {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        width: 300px;
+        text-align: center;
+      }
+      label {
+        display: block;
+        margin: 12px 0 6px 0;
+        font-weight: bold;
+        text-align: left;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 8px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #5a4fcf;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #423bb6;
+      }
+      #message {
+        margin-top: 12px;
+        font-weight: bold;
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="loginForm">
+      <p>Welcome. Please log in</p>
+      <label for="usernameInput">Username</label>
+      <input
+        type="text"
+        id="usernameInput"
+        name="username"
+        autocomplete="username"
+        required
+      />
+      <label for="passwordInput">Password</label>
+      <input
+        type="password"
+        id="passwordInput"
+        name="password"
+        autocomplete="current-password"
+        required
+      />
+      <p id="message"></p>
+      <button type="submit">Log in</button>
+    </form>
+    <script>
+      const form = document.getElementById("loginForm");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        verifyUser();
+      });
+
+      function verifyUser() {
+        var username = document.getElementById("usernameInput").value;
+        var password = document.getElementById("passwordInput").value;
+
+        checkUserCreds(username, password);
+      }
+
+      function checkUserCreds(username, password) {
+        var systemUsername = "Nathan";
+        var systemPassword = "007";
+
+        const messageEl = document.getElementById("message");
+        if (username === systemUsername && password === systemPassword) {
+          messageEl.textContent = "Correct. Logging you in...";
+          messageEl.style.color = "lightgreen";
+        } else {
+          messageEl.textContent = "Incorrect username or password.";
+          messageEl.style.color = "salmon";
+        }
+      }
+    </script>
+  </body>
+</html>

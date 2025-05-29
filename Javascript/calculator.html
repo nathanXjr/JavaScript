@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New School Calculator</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #94bbe9 0%, #e3f3ff 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #3a3a3a;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .calculator {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 30px;
+        box-shadow: 8px 8px 20px rgba(163, 177, 198, 0.32),
+          -8px -8px 20px rgba(255, 255, 255, 0.8);
+        width: 360px;
+        padding: 40px 35px 35px 35px;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .display {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 30px 20px;
+        font-size: 3rem;
+        font-weight: 600;
+        text-align: right;
+        overflow-x: auto;
+        min-height: 70px;
+        user-select: none;
+        margin-bottom: 30px;
+        box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.7),
+          inset -5px -5px 10px rgba(180, 200, 230, 0.5);
+        color: #1b1f38;
+      }
+
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      button {
+        background: linear-gradient(145deg, #e6e9f0, #cdd2e1);
+        border: none;
+        border-radius: 22px;
+        padding: 22px 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #4a4a4a;
+        cursor: pointer;
+        box-shadow: 7px 7px 14px #bec3d4, -7px -7px 14px #ffffff;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      button:hover {
+        background: linear-gradient(145deg, #d8def7, #e9ecff);
+        box-shadow: 2px 2px 5px #acb6e0, -2px -2px 5px #ffffff;
+        color: #2b2f5c;
+        transform: scale(1.05);
+      }
+
+      button.operator {
+        background: linear-gradient(145deg, #a4c6f8, #6793f8);
+        color: #fff;
+        box-shadow: 7px 7px 14px #5a7ddc, -7px -7px 14px #9dc0ff;
+      }
+
+      button.operator:hover {
+        background: linear-gradient(145deg, #6793f8, #a4c6f8);
+        box-shadow: 3px 3px 7px #4970e3, -3px -3px 7px #a7c3ff;
+        color: #e0e7ff;
+        transform: scale(1.1);
+      }
+
+      button.equals {
+        background: linear-gradient(145deg, #50d890, #38bf7c);
+        color: #fff;
+        box-shadow: 7px 7px 14px #2f8a53, -7px -7px 14px #74dbaa;
+        grid-column: span 2;
+      }
+
+      button.equals:hover {
+        background: linear-gradient(145deg, #38bf7c, #50d890);
+        box-shadow: 3px 3px 10px #2b7f4d, -3px -3px 10px #72d4a0;
+        color: #e6ffeb;
+        transform: scale(1.1);
+      }
+
+      button.clear {
+        background: linear-gradient(145deg, #f49090, #fbb4b4);
+        color: #fff;
+        box-shadow: 7px 7px 14px #d76464, -7px -7px 14px #fabebe;
+      }
+
+      button.clear:hover {
+        background: linear-gradient(145deg, #fbb4b4, #f49090);
+        box-shadow: 3px 3px 10px #ca5757, -3px -3px 10px #f9bcbc;
+        color: #fff6f6;
+        transform: scale(1.1);
+      }
+
+      /* Zero button span */
+      button.zero {
+        grid-column: span 2;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 400px) {
+        .calculator {
+          width: 90vw;
+          padding: 30px 25px 25px 25px;
+        }
+        .display {
+          font-size: 2.25rem;
+          min-height: 60px;
+          padding: 25px 15px;
+          margin-bottom: 25px;
+        }
+        button {
+          padding: 18px 0;
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator" role="region" aria-label="Calculator">
+      <div id="display" class="display" aria-live="polite" aria-atomic="true">
+        0
+      </div>
+      <div class="buttons">
+        <button type="button" class="clear" aria-label="Clear">C</button>
+        <button type="button" class="operator" aria-label="Divide">÷</button>
+        <button type="button" class="operator" aria-label="Multiply">×</button>
+        <button type="button" class="operator" aria-label="Delete">⌫</button>
+
+        <button type="button" aria-label="Seven">7</button>
+        <button type="button" aria-label="Eight">8</button>
+        <button type="button" aria-label="Nine">9</button>
+        <button type="button" class="operator" aria-label="Subtract">−</button>
+
+        <button type="button" aria-label="Four">4</button>
+        <button type="button" aria-label="Five">5</button>
+        <button type="button" aria-label="Six">6</button>
+        <button type="button" class="operator" aria-label="Add">+</button>
+
+        <button type="button" aria-label="One">1</button>
+        <button type="button" aria-label="Two">2</button>
+        <button type="button" aria-label="Three">3</button>
+        <button type="button" aria-label="Decimal">.</button>
+
+        <button type="button" aria-label="Zero" class="zero">0</button>
+        <button type="button" class="equals" aria-label="Equals">=</button>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const display = document.getElementById("display");
+        const buttons = document.querySelectorAll(".buttons button");
+        let currentInput = "0";
+        let operator = null;
+        let operand1 = null;
+        let newInput = false; // Flag to start new input after operator
+
+        function updateDisplay() {
+          display.textContent = currentInput;
+        }
+
+        function clearAll() {
+          currentInput = "0";
+          operator = null;
+          operand1 = null;
+          newInput = false;
+          updateDisplay();
+        }
+
+        function deleteLast() {
+          if (newInput) return; // disable delete right after operator pressed
+          if (currentInput.length > 1) {
+            currentInput = currentInput.slice(0, -1);
+          } else {
+            currentInput = "0";
+          }
+          updateDisplay();
+        }
+
+        function appendNumber(num) {
+          if (newInput) {
+            currentInput = num;
+            newInput = false;
+          } else {
+            if (currentInput === "0") {
+              currentInput = num;
+            } else {
+              currentInput += num;
+            }
+          }
+          updateDisplay();
+        }
+
+        function appendDecimal() {
+          if (newInput) {
+            currentInput = "0.";
+            newInput = false;
+          } else if (!currentInput.includes(".")) {
+            currentInput += ".";
+          }
+          updateDisplay();
+        }
+
+        function calculate() {
+          if (operator === null || newInput) return;
+
+          let operand2 = parseFloat(currentInput);
+          let result = 0;
+
+          switch (operator) {
+            case "+":
+              result = operand1 + operand2;
+              break;
+            case "-":
+              result = operand1 - operand2;
+              break;
+            case "*":
+              result = operand1 * operand2;
+              break;
+            case "/":
+              if (operand2 === 0) {
+                alert("Error: Division by zero");
+                clearAll();
+                return;
+              }
+              result = operand1 / operand2;
+              break;
+          }
+
+          // Limit result to 10 decimal places and remove trailing zeros
+          result = parseFloat(result.toFixed(10));
+          currentInput = result.toString();
+          operator = null;
+          operand1 = null;
+          newInput = true;
+          updateDisplay();
+        }
+
+        function setOperator(op) {
+          if (!newInput) {
+            if (operator !== null) {
+              calculate();
+            } else {
+              operand1 = parseFloat(currentInput);
+            }
+          }
+          operator = op;
+          newInput = true;
+        }
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const btnText = button.textContent;
+
+            if (button.classList.contains("clear")) {
+              clearAll();
+            } else if (button.classList.contains("operator")) {
+              if (btnText === "÷") {
+                setOperator("/");
+              } else if (btnText === "×") {
+                setOperator("*");
+              } else if (btnText === "+") {
+                setOperator("+");
+              } else if (btnText === "−") {
+                setOperator("-");
+              } else if (btnText === "⌫") {
+                deleteLast();
+              }
+            } else if (button.classList.contains("equals")) {
+              calculate();
+            } else if (btnText === ".") {
+              appendDecimal();
+            } else {
+              appendNumber(btnText);
+            }
+          });
+        });
+
+        // Keyboard support
+        window.addEventListener("keydown", (e) => {
+          if (e.key >= "0" && e.key <= "9") {
+            appendNumber(e.key);
+          } else if (e.key === ".") {
+            appendDecimal();
+          } else if (
+            e.key === "+" ||
+            e.key === "-" ||
+            e.key === "*" ||
+            e.key === "/"
+          ) {
+            setOperator(e.key);
+          } else if (e.key === "Enter" || e.key === "=") {
+            e.preventDefault();
+            calculate();
+          } else if (e.key === "Backspace") {
+            deleteLast();
+          } else if (e.key.toLowerCase() === "c") {
+            clearAll();
+          }
+        });
+
+        updateDisplay();
+      })();
+    </script>
+  </body>
+</html>
